@@ -26,3 +26,16 @@ export function createElement(name, props = {}, ...children) {
 
   return element;
 }
+
+
+export const getEnding = (value, wordsArr = ['раз', 'раза']) => {
+  let num = value;
+  for (let i = 0; i < String(value).length - 1; i++) {
+    num %= 10;
+  }
+  if ([2, 3, 4].indexOf(num) === -1 || (10 < value && value < 20)) {
+    return wordsArr[0];
+  }
+  return wordsArr[1];
+}
+

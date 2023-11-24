@@ -1,4 +1,5 @@
 import React from 'react';
+import { getEnding } from './utils.js';
 import { createElement } from './utils.js';
 import './styles.css';
 
@@ -10,18 +11,6 @@ import './styles.css';
 function App({ store }) {
 
   const list = store.getState().list;
-
-  const getEnding = (value, wordsArr = ['раз', 'раза']) => {
-    let num = value;
-    for (let i = 0; i < String(value).length - 1; i++) {
-      num %= 10;
-    }
-    if ([2, 3, 4].indexOf(num) === -1 || (10 < value && value < 20)) {
-      return wordsArr[0];
-    }
-    return wordsArr[1];
-  }
-
   return (
     <div className='App'>
       <div className='App-head'>
