@@ -10,7 +10,17 @@ import './styles.css';
 function App({ store }) {
 
   const list = store.getState().list;
-  console.log(list)
+
+  const getEnding = (value, wordsArr = ['раз', 'раза']) => {
+    let num = value;
+    for (let i = 0; i < String(value).length - 1; i++) {
+      num %= 10;
+    }
+    if ([2, 3, 4].indexOf(num) === -1 || (10 < value && value < 20)) {
+      return wordsArr[0];
+    }
+    return wordsArr[1];
+  }
 
   return (
     <div className='App'>
@@ -27,7 +37,7 @@ function App({ store }) {
               <div className={'Item' + (item.selected ? ' Item_selected' : '')}
                 onClick={() => store.selectItem(item.code)}>
                 <div className='Item-code'>{item.code}</div>
-                <div className='Item-title'>{item.title} {item.count ? `| Выделяли ${item.count} раз` : <></>}</div>
+                <div className='Item-title'>{item.title} {item.count ? `| Выделяли ${item.count} ${getEnding(item.count)}` : <></>}</div>
                 <div className='Item-actions'>
                   <button onClick={() => store.deleteItem(item.code)}>
                     Удалить
