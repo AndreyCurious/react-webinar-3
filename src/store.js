@@ -1,4 +1,4 @@
-import {generateCode} from "./utils";
+import { generateCode } from "./utils";
 
 /**
  * Хранилище состояния приложения
@@ -6,6 +6,8 @@ import {generateCode} from "./utils";
 class Store {
   constructor(initState = {}) {
     this.state = initState;
+    this.state.basket = [], // массив с товарами, добавленными в корзину
+      this.state.modalIsOpen = true;
     this.listeners = []; // Слушатели изменений состояния
   }
 
@@ -46,9 +48,62 @@ class Store {
   addItem() {
     this.setState({
       ...this.state,
-      list: [...this.state.list, {code: generateCode(), title: 'Новая запись'}]
+      list: [...this.state.list, { code: generateCode(), title: 'Новая запись' }]
     })
   };
+
+
+
+  /**
+  * Добавление товара в корзину по code
+  * @param code
+  */
+  addBasketItem(code) {
+    const basketItem = this.state.basket.find((item) => item.code === code);
+    const listItem = this.state.list.find(item => item.code === code);
+    this.setState({
+      ...this.state,
+      basket:
+        !basketItem ?
+          [
+            ...this.state.basket, { ...listItem, count: 1 }
+          ]
+          :
+          this.state.basket.map((item) => {
+            if (item.code === code) {
+              return {
+                ...item,
+                count: item.count + 1,
+              }
+            }
+            return item;
+          })
+    })
+  };
+
+  /**
+  * Удаление товара из корзины по code
+  * @param code
+  */
+  deleteBasketItem(code) {
+    this.setState({
+      ...this.state,
+      basket:
+        this.state.basket.filter((item) => item.code !== code)
+    })
+  };
+
+
+  /**
+   * Открыть/закрыть модальное окно
+   * 
+   */
+  setActiveModal() {
+    this.setState({
+      ...this.state,
+      modal: !this.state.modal
+    })
+  }
 
   /**
    * Удаление записи по коду
@@ -79,7 +134,7 @@ class Store {
           };
         }
         // Сброс выделения если выделена
-        return item.selected ? {...item, selected: false} : item;
+        return item.selected ? { ...item, selected: false } : item;
       })
     })
   }

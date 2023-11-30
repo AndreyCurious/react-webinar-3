@@ -1,0 +1,84 @@
+.Modal {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: .5s;
+}
+
+.Modal-active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.Modal-content {
+  background-color: white;
+  width: 960px;
+
+  border-radius: 10px;
+  transform: scale(0.5);
+  transition: .4s all;
+}
+
+.Modal-content-active {
+  transform: scale(1);
+}
+
+.Modal-content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+.Modal-content-header-title {
+  padding-left: 20px;
+}
+
+.Modal-content-header-button {
+  padding-right: 32px;
+}
+
+.Modal-content-body {
+  overflow-y: auto;
+  max-height: 50vh;
+  margin-top: 71px;
+  margin-bottom: 20px;
+  border-top: 1px dashed #ccc;
+}
+
+.Modal-content-footer {
+  margin-bottom: 89px;
+}
+
+.Modal-content-footer-info {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.Modal-content-footer-info-price {
+  padding-right: 120px;
+}
+
+.Modal-content-footer-info-sum {
+  padding-right: 61px;
+}
+
+.Item-info {
+  display: flex;
+}
+
+.Item-info-count {
+  padding-right: 24px;
+}
+
+.Item-info-price {
+  padding-right: 61px;
+}
