@@ -4,7 +4,6 @@ import './style.css';
 import { plural, numberFormat } from '../../utils';
 
 function Controls({ basket, onOpenModal }) {
-  console.log(basket)
   const getPluralWord = plural(basket.productsCount, { one: 'товар', few: 'товара', many: 'товаров' });
   return (
     <div className='Controls'>
