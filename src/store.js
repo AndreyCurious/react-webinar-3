@@ -6,9 +6,13 @@ import { generateCode } from "./utils";
 class Store {
   constructor(initState = {}) {
     this.state = initState;
-    this.state.basket = [], // массив с товарами, добавленными в корзину
-      this.state.modalIsOpen = true;
-    this.listeners = []; // Слушатели изменений состояния
+    this.state.basket = {
+      products: [],
+      allPrice: 0,
+      productsCount: 0,
+    }, // массив с товарами, добавленными в корзину
+      this.state.modalIsOpen = true,
+      this.listeners = []; // Слушатели изменений состояния
   }
 
   /**
@@ -59,17 +63,17 @@ class Store {
   * @param code
   */
   addBasketItem(code) {
-    const basketItem = this.state.basket.find((item) => item.code === code);
+    const basketItem = this.state.basket.products.find((item) => item.code === code);
     const listItem = this.state.list.find(item => item.code === code);
     this.setState({
       ...this.state,
-      basket:
-        !basketItem ?
+      basket: {
+        products: !basketItem ?
           [
-            ...this.state.basket, { ...listItem, count: 1 }
+            ...this.state.basket.products, { ...listItem, count: 1 }
           ]
           :
-          this.state.basket.map((item) => {
+          this.state.basket.products.map((item) => {
             if (item.code === code) {
               return {
                 ...item,
@@ -77,7 +81,10 @@ class Store {
               }
             }
             return item;
-          })
+          }),
+        allPrice: this.state.basket.allPrice + listItem.price,
+        productsCount: !basketItem ? this.state.basket.productsCount + 1 : this.state.basket.productsCount,
+      },
     })
   };
 
@@ -86,10 +93,14 @@ class Store {
   * @param code
   */
   deleteBasketItem(code) {
+    const item = this.state.basket.products.find((item) => item.code === code);
     this.setState({
       ...this.state,
-      basket:
-        this.state.basket.filter((item) => item.code !== code)
+      basket: {
+        products: this.state.basket.products.filter((item) => item.code !== code),
+        allPrice: this.state.basket.allPrice - item.price * item.count,
+        productsCount: this.state.basket.productsCount - 1,
+      }
     })
   };
 

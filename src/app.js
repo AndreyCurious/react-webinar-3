@@ -4,6 +4,7 @@ import Controls from "./components/controls";
 import Head from "./components/head";
 import PageLayout from "./components/page-layout";
 import Modal from './components/modal';
+import Basket from './components/basket';
 
 /**
  * Приложение
@@ -31,12 +32,16 @@ function App({ store }) {
   return (
     <>
       <Modal
-        titileModal='Корзина'
         isOpen={modalIsOpen}
-        basket={basket}
         onCloseModal={callbacks.onSetActiveModal}
-        funcButton={callbacks.onDeleteBasketItem}
-      />
+      >
+        <Basket
+          titileModal='Корзина'
+          basket={basket}
+          onCloseModal={callbacks.onSetActiveModal}
+          funcButton={callbacks.onDeleteBasketItem}
+        />
+      </Modal>
       <PageLayout>
         <Head title='Магазин' />
         <Controls

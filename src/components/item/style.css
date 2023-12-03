@@ -25,3 +25,9 @@
   justify-content: flex-end;
   padding: 20px 20px 20px 10px;
 }
+
+.Item-info-price,
+.Item-price {
+  font-size: 18px;
+  line-height: 20.7px;
+}

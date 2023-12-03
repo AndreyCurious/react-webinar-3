@@ -1,21 +1,21 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import './style.css';
-import { plural, getTotalPrice, numberFormat } from '../../utils';
+import { plural, numberFormat } from '../../utils';
 
 function Controls({ basket, onOpenModal }) {
-  const countUniqueProducts = basket.length;
-  const getPluralWord = plural(countUniqueProducts, { one: 'товар', few: 'товара', many: 'товаров' });
+  console.log(basket)
+  const getPluralWord = plural(basket.productsCount, { one: 'товар', few: 'товара', many: 'товаров' });
   return (
     <div className='Controls'>
       <div className='Controls-interface'>
         В корзине:
         <strong
           className='Controls-interface-count'>
-          {countUniqueProducts === 0 ?
+          {basket.productsCount === 0 ?
             "пусто"
             :
-            `${countUniqueProducts} ${getPluralWord} / ${numberFormat(getTotalPrice(basket))} ₽`
+            `${basket.productsCount} ${getPluralWord} / ${numberFormat(basket.allPrice)} ₽`
           }
         </strong>
       </div>
@@ -25,7 +25,11 @@ function Controls({ basket, onOpenModal }) {
 }
 
 Controls.propTypes = {
-  basket: PropTypes.array,
+  basket: PropTypes.shape({
+    products: PropTypes.array,
+    allPrice: PropTypes.number,
+    productsCount: PropTypes.number,
+  }),
   onOpenModal: PropTypes.func
 };
 

@@ -60,14 +60,3 @@ export function numberFormat(number) {
   return new Intl.NumberFormat('ru-RU').format(number);
 }
 
-/**
- * Возврат полной стоимости корзины товаров
- * @param products {Object} Корзина с товарами
- * @returns {Number}
- */
-export function getTotalPrice(basket) {
-  const num = basket.reduce((acc, { price, count }) => {
-    return acc += price * count;
-  }, 0)
-  return num;
-};

@@ -2,7 +2,19 @@ body {
   margin: 0;
   padding: 0;
   background: #535353;
-  font-family: sans-serif;
+  font-family: Arial, sans-serif;
+}
+
+button {
+  font-family: Arial, sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 14.95px;
+  width: 80px;
+  height: 21px;
+  border-radius: 2px;
+  border: 1px solid #767676;
+  padding: 0;
 }
 
 .PageLayout {
