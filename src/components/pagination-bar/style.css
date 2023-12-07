@@ -1,0 +1,40 @@
+.PaginationBar {
+  margin: 22px;
+
+  display: flex;
+  justify-content: flex-end
+}
+
+.PaginationBar-button {
+  padding: 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18.4px;
+  padding: 1px;
+  width: 20px;
+  height: 20px;
+  border: none;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.PaginationBar-button:hover {
+  background-color: #E1E1E1;
+}
+
+.PaginationBar-dots {
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  color: #CCCCCC;
+}
+
+
+.PaginationBar-button_active {
+  background-color: #0087E9;
+}
+
+.PaginationBar-button_active:hover {
+  background-color: #0087E9;
+}

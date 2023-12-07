@@ -1,0 +1,21 @@
+.Product-info {
+  padding: 10px 41px 0 40px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20.7px;
+}
+
+.Product-info-item {
+  padding-bottom: 20px;
+}
+
+.Product-info-strong {
+  padding-left: 7px;
+  font-weight: 700;
+}
+
+.Product-info-price {
+  font-size: 24px;
+  line-height: 27.6px;
+  font-weight: 700;
+}

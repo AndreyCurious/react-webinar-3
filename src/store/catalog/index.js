@@ -1,5 +1,6 @@
-import {codeGenerator} from "../../utils";
+import { codeGenerator } from "../../utils";
 import StoreModule from "../module";
+import routes from "../../routes";
 
 class Catalog extends StoreModule {
 
@@ -10,16 +11,72 @@ class Catalog extends StoreModule {
 
   initState() {
     return {
-      list: []
+      list: [],
+      currentPage: 1,
+      perPage: null,
+      totalCountPages: null,
+      currentProduct: {
+        _id: null,
+        description: '',
+        madeIn: {
+          title: '',
+          code: ''
+        },
+        category: {
+          title: ''
+        },
+        edititon: 0,
+        price: 0,
+      },
     }
   }
 
-  async load() {
-    const response = await fetch('/api/v1/articles');
+  getPaginationArray(currentPage, totalCountPages) {
+    // не очень изящно, не придумал ничего лучше
+    if ([1, 2].indexOf(currentPage) !== -1) {
+      return [1, 2, 3, null, totalCountPages]
+    }
+    if (currentPage === 3) {
+      return [1, 2, 3, 4, null, totalCountPages]
+    }
+    if ([totalCountPages, totalCountPages - 1].indexOf(currentPage) !== -1) {
+      return [1, null, totalCountPages - 2, totalCountPages - 1, totalCountPages]
+    }
+    if (currentPage === totalCountPages - 2) {
+      return [1, null, totalCountPages - 3, totalCountPages - 2, totalCountPages - 1, totalCountPages]
+    }
+    return [1, null, currentPage - 1, currentPage, currentPage + 1, null, totalCountPages]
+  }
+
+  async loadProductInfo(id) {
+    const response = await fetch(routes.fetchProduct(id));
     const json = await response.json();
     this.setState({
       ...this.getState(),
-      list: json.result.items
+      currentProduct: json.result,
+    }, 'Загружен товар из АПИ');
+  }
+
+
+  async loadNewPage(currentPage) {
+    const skip = (currentPage - 1) * 10;
+    const response = await fetch(routes.fetchLoadNewPage(skip));
+    const json = await response.json();
+    this.setState({
+      ...this.getState(),
+      list: json.result.items,
+      currentPage: currentPage,
+    }, 'Загружена новая страница товаров из АПИ');
+  }
+
+  async firstLoad(perPage = 10) {
+    const response = await fetch(routes.fetchFirstLoad(perPage));
+    const json = await response.json();
+    this.setState({
+      ...this.getState(),
+      list: json.result.items,
+      totalCountPages: Math.ceil(json.result.count / perPage),
+      perPage: perPage
     }, 'Загружены товары из АПИ');
   }
 }
