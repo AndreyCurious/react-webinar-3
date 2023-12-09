@@ -49,7 +49,8 @@ function Main() {
         onOpen={callbacks.openModalBasket}
         amount={select.amount}
         sum={select.sum}
-      />
+      >
+      </BasketTool>
       <List list={select.list} renderItem={renders.item} />
       <PaginationBar
         loadNewPage={callbacks.loadNewPage}
