@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
 import { numberFormat } from "../../utils";
 import './style.css';
+import useDictionary from "../../store/use-dictionary";
 
 
 function ProductInfo(props) {
 
   const cn = bem('Product-info')
+  const { currentDictionary } = useDictionary();
 
   const callbacks = {
     onAdd: () => props.addToBasket(props.currentProduct._id),
@@ -21,7 +23,7 @@ function ProductInfo(props) {
         </span>
       </div>
       <div className={cn('item')}>
-        Страна производитель:
+        {currentDictionary.productPage.madeIn}
         <strong className={cn('strong')}>
           {props.currentProduct.madeIn.title}
         </strong>
@@ -31,44 +33,44 @@ function ProductInfo(props) {
       </div>
       <div className={cn('item')}>
         <span>
-          Категория:
+          {currentDictionary.productPage.category}
           <strong className={cn('strong')}>
             {props.currentProduct.category.title}
           </strong>
         </span>
       </div>
       <div className={cn('item')}>
-        Год выпуска:
+        {currentDictionary.productPage.year}
         <strong className={cn('strong')}>
           {props.currentProduct.edition}
         </strong>
       </div>
       <div className={cn('item')}>
         <strong>
-          Цена: {numberFormat(props.currentProduct.price)} ₽
+          {currentDictionary.productPage.price} {numberFormat(props.currentProduct.price)} ₽
         </strong>
       </div>
       <button onClick={callbacks.onAdd}>
-        Добавить
+        {currentDictionary.productPage.add}
       </button>
     </div>
   )
 }
 
 ProductInfo.propTypes = {
+  addToBasket: PropTypes.func,
   currentProduct: PropTypes.shape({
-    description: PropTypes.string,
+    _id: PropTypes.string,
     madeIn: PropTypes.shape({
       title: PropTypes.string,
       code: PropTypes.string
     }),
     category: PropTypes.shape({
-      title: PropTypes.string
+      title: PropTypes.string,
     }),
     edition: PropTypes.number,
     price: PropTypes.number
-  }),
-  addToBasket: PropTypes.func
+  })
 };
 
 ProductInfo.defaultProps = {

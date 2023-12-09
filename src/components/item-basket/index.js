@@ -5,10 +5,13 @@ import { cn as bem } from "@bem-react/classname";
 import { Link } from 'react-router-dom';
 import PropTypes from "prop-types";
 import routes from '../../routes';
+import useDictionary from '../../store/use-dictionary';
 import './style.css';
 
 function ItemBasket(props) {
   const cn = bem('ItemBasket');
+
+  const { currentDictionary } = useDictionary();
 
   const callbacks = {
     onRemove: (e) => props.onRemove(props.item._id),
@@ -27,9 +30,9 @@ function ItemBasket(props) {
       </Link>
       <div className={cn('right')}>
         <div className={cn('cell')}>{numberFormat(props.item.price)} ₽</div>
-        <div className={cn('cell')}>{numberFormat(props.item.amount || 0)} шт</div>
+        <div className={cn('cell')}>{numberFormat(props.item.amount || 0)} {currentDictionary.modals.basket.item.pcs}</div>
         <div className={cn('cell')}>
-          <button onClick={callbacks.onRemove}>Удалить</button>
+          <button onClick={callbacks.onRemove}>{currentDictionary.modals.basket.item.delete}</button>
         </div>
       </div>
     </div>
@@ -44,13 +47,11 @@ ItemBasket.propTypes = {
     amount: PropTypes.number
   }).isRequired,
   onRemove: propTypes.func,
-  loadProductInfo: propTypes.func,
   closeModal: propTypes.func,
 }
 
 ItemBasket.defaultProps = {
   onRemove: () => { },
-  loadProductInfo: () => { },
   closeModal: () => { },
 }
 

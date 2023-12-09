@@ -69,14 +69,16 @@ class Catalog extends StoreModule {
     }, 'Загружена новая страница товаров из АПИ');
   }
 
-  async firstLoad(perPage = 10) {
-    const response = await fetch(routes.fetchFirstLoad(perPage));
+  async firstLoad(currentPage, perPage = 10) {
+    const skip = (currentPage - 1) * 10;
+    const response = await fetch(routes.fetchFirstLoad(perPage, skip));
     const json = await response.json();
     this.setState({
       ...this.getState(),
       list: json.result.items,
       totalCountPages: Math.ceil(json.result.count / perPage),
-      perPage: perPage
+      perPage: perPage,
+      currentPage: currentPage
     }, 'Загружены товары из АПИ');
   }
 }

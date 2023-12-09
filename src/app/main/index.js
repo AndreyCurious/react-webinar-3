@@ -7,13 +7,14 @@ import List from "../../components/list";
 import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
 import PaginationBar from '../../components/pagination-bar';
+import useDictionary from '../../store/use-dictionary';
 
 function Main() {
-
+  const { currentDictionary } = useDictionary();
   const store = useStore();
   useEffect(() => {
-    // при первом рендере мы можем указать лимит выводимых данных, по умолчанию = 10
-    store.actions.catalog.firstLoad();
+    // при первом рендере 2 параметром мы можем указать лимит выводимых продуктов, по умолчанию = 10
+    store.actions.catalog.firstLoad(select.currentPage);
   }, []);
 
   const select = useSelector(state => ({
@@ -21,7 +22,7 @@ function Main() {
     totalCountPages: state.catalog.totalCountPages,
     currentPage: state.catalog.currentPage,
     amount: state.basket.amount,
-    sum: state.basket.sum
+    sum: state.basket.sum,
   }));
 
   const callbacks = {
@@ -32,7 +33,7 @@ function Main() {
     // Перелистывание страницы
     loadNewPage: useCallback((currentPage) => store.actions.catalog.loadNewPage(currentPage), [store]),
     // Присылает массив, по которому будет строиться компонент пагинации
-    getPaginationArray: useCallback((currentPage, totalCountPages) => store.actions.catalog.getPaginationArray(currentPage, totalCountPages), [store])
+    getPaginationArray: useCallback((currentPage, totalCountPages) => store.actions.catalog.getPaginationArray(currentPage, totalCountPages), [store]),
   }
 
   const renders = {
@@ -43,9 +44,12 @@ function Main() {
 
   return (
     <PageLayout>
-      <Head title='Магазин' />
-      <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount}
-        sum={select.sum} />
+      <Head title={currentDictionary.main.headTitle} />
+      <BasketTool
+        onOpen={callbacks.openModalBasket}
+        amount={select.amount}
+        sum={select.sum}
+      />
       <List list={select.list} renderItem={renders.item} />
       <PaginationBar
         loadNewPage={callbacks.loadNewPage}
@@ -54,7 +58,6 @@ function Main() {
         getPaginationArray={callbacks.getPaginationArray}
       />
     </PageLayout>
-
   );
 }
 

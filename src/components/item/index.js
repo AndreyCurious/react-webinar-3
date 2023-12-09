@@ -5,9 +5,11 @@ import { cn as bem } from '@bem-react/classname';
 import { numberFormat } from "../../utils";
 import routes from "../../routes";
 import './style.css';
+import useDictionary from "../../store/use-dictionary";
 
 function Item(props) {
 
+  const { currentDictionary } = useDictionary()
   const cn = bem('Item');
 
   const callbacks = {
@@ -25,7 +27,7 @@ function Item(props) {
       </Link>
       <div className={cn('actions')}>
         <div className={cn('price')}>{numberFormat(props.item.price)} ₽</div>
-        <button onClick={callbacks.onAdd}>Добавить</button>
+        <button onClick={callbacks.onAdd}>{currentDictionary.main.item.add}</button>
       </div>
     </div>
   );
@@ -43,7 +45,6 @@ Item.propTypes = {
 
 Item.defaultProps = {
   onAdd: () => { },
-  loadProductInfo: () => { },
 }
 
 export default memo(Item);

@@ -1,5 +1,5 @@
-import {useContext} from "react";
-import {StoreContext} from "./context";
+import { useContext } from "react";
+import { StoreContext } from "./context";
 
 /**
  * Хук для доступа к объекту хранилища
@@ -8,3 +8,4 @@ import {StoreContext} from "./context";
 export default function useStore() {
   return useContext(StoreContext);
 }
+
