@@ -1,8 +1,7 @@
-import { memo, useEffect } from "react";
+import { memo } from "react";
 import PropTypes from 'prop-types';
 import './style.css';
 import { Link } from "react-router-dom";
-import routes from "../../routes";
 
 function PaginationBar(props) {
   const paginationArray = props.getPaginationArray(props.currentPage, props.totalCountPages);
@@ -13,7 +12,7 @@ function PaginationBar(props) {
           return (
             <Link
               onClick={item !== props.currentPage ? () => props.loadNewPage(item) : null}
-              to={routes.linkPage(item)}
+              to={`./?page=${item}`}
               key={index}
               className={`PaginationBar-button ${item === props.currentPage ? "PaginationBar-button_active" : null}`}
             >

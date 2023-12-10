@@ -12,7 +12,6 @@ function ItemBasket(props) {
   const cn = bem('ItemBasket');
 
   const { currentDictionary } = useDictionary();
-
   const callbacks = {
     onRemove: (e) => props.onRemove(props.item._id),
     closeModal: () => props.closeModal(),

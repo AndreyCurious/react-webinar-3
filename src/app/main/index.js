@@ -10,6 +10,9 @@ import PaginationBar from '../../components/pagination-bar';
 import useDictionary from '../../store/use-dictionary';
 import Menu from '../../components/menu';
 import { useSearchParams } from 'react-router-dom';
+import { getPaginationArray } from '../../utils'
+import Navbar from '../../components/navbar';
+import Loading from '../../components/loading';
 
 function Main() {
   const { currentDictionary } = useDictionary();
@@ -26,6 +29,7 @@ function Main() {
 
   const select = useSelector(state => ({
     list: state.catalog.list,
+    isLoading: state.catalog.isLoading,
     totalCountPages: state.catalog.totalCountPages,
     currentPage: state.catalog.currentPage,
     amount: state.basket.amount,
@@ -40,7 +44,7 @@ function Main() {
     // Перелистывание страницы
     loadNewPage: useCallback((currentPage) => store.actions.catalog.loadPage(currentPage), [store]),
     // Присылает массив, по которому будет строиться компонент пагинации
-    getPaginationArray: useCallback((currentPage, totalCountPages) => store.actions.catalog.getPaginationArray(currentPage, totalCountPages), [store]),
+    getPaginationArray: (currentPage, totalCountPages) => getPaginationArray(currentPage, totalCountPages),
   }
 
   const renders = {
@@ -52,20 +56,27 @@ function Main() {
   return (
     <PageLayout>
       <Head title={currentDictionary.main.headTitle} />
-      <Menu>
+      <Navbar>
+        <Menu />
         <BasketTool
           onOpen={callbacks.openModalBasket}
           amount={select.amount}
           sum={select.sum}
         />
-      </Menu>
-      <List list={select.list} renderItem={renders.item} />
-      <PaginationBar
-        loadNewPage={callbacks.loadNewPage}
-        currentPage={select.currentPage}
-        totalCountPages={select.totalCountPages}
-        getPaginationArray={callbacks.getPaginationArray}
-      />
+      </Navbar>
+      {!select.isLoading ?
+        <>
+          <List list={select.list} renderItem={renders.item} />
+          <PaginationBar
+            loadNewPage={callbacks.loadNewPage}
+            currentPage={select.currentPage}
+            totalCountPages={select.totalCountPages}
+            getPaginationArray={callbacks.getPaginationArray}
+          />
+        </>
+        :
+        <Loading />
+      }
     </PageLayout>
   );
 }

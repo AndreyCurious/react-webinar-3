@@ -1,20 +1,19 @@
 .PaginationBar {
   margin: 22px;
-
   display: flex;
   justify-content: flex-end
 }
 
 .PaginationBar-button {
   box-sizing: border-box;
-  padding-top: 1px;
+  padding: 1px;
   font-size: 16px;
   text-decoration: none;
   text-align: center;
   vertical-align: middle;
   font-weight: 400;
   line-height: 18.4px;
-  width: 20px;
+  min-width: 20px;
   height: 20px;
   border: none;
   color: inherit;
@@ -36,6 +35,7 @@
 
 .PaginationBar-button_active {
   background-color: #0087E9;
+  color: #FFFFFF;
 }
 
 .PaginationBar-button_active:hover {

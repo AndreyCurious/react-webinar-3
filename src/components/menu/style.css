@@ -1,11 +1,3 @@
-.Menu {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  font-size: 18px;
-}
-
 .Menu-main,
 .Menu-main:visited {
   color: #0087E9

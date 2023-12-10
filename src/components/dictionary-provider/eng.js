@@ -31,5 +31,6 @@ export default {
     year: 'Year of issue:',
     price: 'Price:',
     add: 'Add'
-  }
+  },
+  loading: 'Loading...'
 }

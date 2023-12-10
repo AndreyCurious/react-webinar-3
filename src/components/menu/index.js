@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
 import useDictionary from "../../store/use-dictionary";
 import './style.css';
-import routes from "../../routes";
 
 
 function Menu({ children }) {
@@ -13,7 +12,7 @@ function Menu({ children }) {
 
   return (
     <div className={cn()}>
-      <Link to={routes.linkPage(1)} className={cn('main')}>
+      <Link to={`/?page=1`} className={cn('main')}>
         {currentDictionary.main.basketTool.main}
       </Link>
       {children}

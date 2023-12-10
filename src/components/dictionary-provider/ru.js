@@ -31,5 +31,6 @@ export default {
     year: 'Год выпуска:',
     price: 'Цена:',
     add: 'Добавить'
-  }
+  },
+  loading: 'Загрузка...'
 }

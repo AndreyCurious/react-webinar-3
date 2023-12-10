@@ -34,3 +34,20 @@ export function numberFormat(value, locale = 'ru-RU', options = {}) {
   return new Intl.NumberFormat(locale, options).format(value);
 }
 
+
+export function getPaginationArray(currentPage, totalCountPages) {
+  // не очень изящно, не придумал ничего лучше
+  if ([1, 2].indexOf(currentPage) !== -1) {
+    return [1, 2, 3, null, totalCountPages]
+  }
+  if (currentPage === 3) {
+    return [1, 2, 3, 4, null, totalCountPages]
+  }
+  if ([totalCountPages, totalCountPages - 1].indexOf(currentPage) !== -1) {
+    return [1, null, totalCountPages - 2, totalCountPages - 1, totalCountPages]
+  }
+  if (currentPage === totalCountPages - 2) {
+    return [1, null, totalCountPages - 3, totalCountPages - 2, totalCountPages - 1, totalCountPages]
+  }
+  return [1, null, currentPage - 1, currentPage, currentPage + 1, null, totalCountPages]
+}
