@@ -6,6 +6,7 @@ import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
 import ProductInfo from '../../components/product-info';
 import { useLocation } from "react-router-dom";
+import Menu from '../../components/menu';
 
 function ProductPage() {
   const store = useStore();
@@ -21,7 +22,6 @@ function ProductPage() {
     sum: state.basket.sum,
     currentProduct: state.catalog.currentProduct,
   }))
-
   const callbacks = {
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
@@ -30,9 +30,12 @@ function ProductPage() {
   return (
     <PageLayout>
       <Head title={select.currentProduct.title} />
-      <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount}
-        sum={select.sum}
-      />
+      <Menu>
+        <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount}
+          sum={select.sum}
+        />
+      </Menu>
+
       <ProductInfo currentProduct={select.currentProduct} addToBasket={callbacks.addToBasket} />
     </PageLayout>
   )

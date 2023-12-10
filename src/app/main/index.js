@@ -8,14 +8,21 @@ import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
 import PaginationBar from '../../components/pagination-bar';
 import useDictionary from '../../store/use-dictionary';
+import Menu from '../../components/menu';
+import { useSearchParams } from 'react-router-dom';
 
 function Main() {
   const { currentDictionary } = useDictionary();
+  const [params] = useSearchParams();
+  const page = params.get('page');
   const store = useStore();
   useEffect(() => {
-    // при первом рендере 2 параметром мы можем указать лимит выводимых продуктов, по умолчанию = 10
-    store.actions.catalog.firstLoad(select.currentPage);
-  }, []);
+    //мы можем указать лимит выводимых продуктов, по умолчанию = 10
+    !!page ?
+      store.actions.catalog.loadPage(Number(page))
+      :
+      store.actions.catalog.loadPage()
+  }, [page]);
 
   const select = useSelector(state => ({
     list: state.catalog.list,
@@ -31,7 +38,7 @@ function Main() {
     // Открытие модалки корзины
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
     // Перелистывание страницы
-    loadNewPage: useCallback((currentPage) => store.actions.catalog.loadNewPage(currentPage), [store]),
+    loadNewPage: useCallback((currentPage) => store.actions.catalog.loadPage(currentPage), [store]),
     // Присылает массив, по которому будет строиться компонент пагинации
     getPaginationArray: useCallback((currentPage, totalCountPages) => store.actions.catalog.getPaginationArray(currentPage, totalCountPages), [store]),
   }
@@ -45,12 +52,13 @@ function Main() {
   return (
     <PageLayout>
       <Head title={currentDictionary.main.headTitle} />
-      <BasketTool
-        onOpen={callbacks.openModalBasket}
-        amount={select.amount}
-        sum={select.sum}
-      >
-      </BasketTool>
+      <Menu>
+        <BasketTool
+          onOpen={callbacks.openModalBasket}
+          amount={select.amount}
+          sum={select.sum}
+        />
+      </Menu>
       <List list={select.list} renderItem={renders.item} />
       <PaginationBar
         loadNewPage={callbacks.loadNewPage}

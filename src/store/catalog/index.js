@@ -16,6 +16,7 @@ class Catalog extends StoreModule {
       perPage: null,
       totalCountPages: null,
       currentProduct: {
+        title: '',
         _id: null,
         description: '',
         madeIn: {
@@ -58,27 +59,16 @@ class Catalog extends StoreModule {
   }
 
 
-  async loadNewPage(currentPage) {
-    const skip = (currentPage - 1) * 10;
-    const response = await fetch(routes.fetchLoadNewPage(skip));
-    const json = await response.json();
-    this.setState({
-      ...this.getState(),
-      list: json.result.items,
-      currentPage: currentPage,
-    }, 'Загружена новая страница товаров из АПИ');
-  }
-
-  async firstLoad(currentPage, perPage = 10) {
+  async loadPage(currentPage = 1, perPage = 10) {
     const skip = (currentPage - 1) * 10;
     const response = await fetch(routes.fetchFirstLoad(perPage, skip));
     const json = await response.json();
     this.setState({
       ...this.getState(),
       list: json.result.items,
+      currentPage: currentPage,
       totalCountPages: Math.ceil(json.result.count / perPage),
       perPage: perPage,
-      currentPage: currentPage
     }, 'Загружены товары из АПИ');
   }
 }
