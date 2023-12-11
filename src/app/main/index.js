@@ -15,16 +15,22 @@ import Navbar from '../../components/navbar';
 import Loading from '../../components/loading';
 
 function Main() {
+  const store = useStore();
   const { currentDictionary } = useDictionary();
+
   const [params] = useSearchParams();
   const page = params.get('page');
-  const store = useStore();
   useEffect(() => {
-    //мы можем указать лимит выводимых продуктов, по умолчанию = 10
-    !!page ?
-      store.actions.catalog.loadPage(Number(page))
-      :
-      store.actions.catalog.loadPage()
+    // мы можем указать лимит выводимых продуктов через метод setPerPage
+    // я пытался указывать его вместе с загрузкой страницы, но ловил странный баг, если я передам 2 парметром в функцию loadPage 
+    // количество выводимых товаров (loadPage(Number(page), 10)),
+    // то иногда, при перелистывании страницы, 2 параметр становится undefined(я не забывал передать в пагинтор тоже этот парметр)
+    // и все приложение ломается, я не нашел ответа на этот вопрос в интернете
+    // поэтому пришлось вывести в отдельный метод  ¯\_(ツ)_/¯ буду рад, если вы скажете
+    store.actions.catalog.setPerPage(20)
+  }, [])
+  useEffect(() => {
+    store.actions.catalog.loadPage(Number(page))
   }, [page]);
 
   const select = useSelector(state => ({
@@ -34,6 +40,7 @@ function Main() {
     currentPage: state.catalog.currentPage,
     amount: state.basket.amount,
     sum: state.basket.sum,
+    perPage: state.catalog.perPage
   }));
 
   const callbacks = {

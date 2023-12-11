@@ -19,14 +19,22 @@ class Catalog extends StoreModule {
     }
   }
 
-
-  async loadPage(currentPage = 1, perPage = 10) {
+  setPerPage(perPage) {
     this.setState({
       ...this.getState(),
-      isLoading: true,
+      perPage: perPage
+    })
+  }
+
+  async loadPage(currentPage) {
+    this.setState({
+      ...this.getState(),
+      isLoading: true
     }, 'Загрузка');
-    const skip = (currentPage - 1) * 10;
-    const response = await fetch(routes.fetchFirstLoad(perPage, skip));
+    currentPage === 0 ? currentPage = 1 : null;
+    const perPage = this.getState().perPage;
+    const skip = (currentPage - 1) * perPage;
+    const response = await fetch(routes.fetchLoadPage(perPage, skip));
     const json = await response.json();
     setTimeout(() => {
       this.setState({

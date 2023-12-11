@@ -29,9 +29,10 @@ class Product extends StoreModule {
       ...this.getState(),
       isLoading: true,
     }, 'Загрузка');
-    const response = await fetch(routes.fetchProduct(id));
-    const json = await response.json();
-    setTimeout(() => {
+
+    setTimeout(async () => {
+      const response = await fetch(routes.fetchProduct(id));
+      const json = await response.json();
       this.setState({
         ...this.getState(),
         currentProduct: json.result,
