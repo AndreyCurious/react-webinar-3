@@ -6,22 +6,24 @@ import useInit from "../../hooks/use-init";
 import Navigation from "../../containers/navigation";
 import PageLayout from "../../components/page-layout";
 import Head from "../../components/head";
-import CatalogFilter from "../../containers/catalog-filter";
-import CatalogList from "../../containers/catalog-list";
 import LocaleSelect from "../../containers/locale-select";
 import UserBar from '../../components/user-bar';
 import { useNavigate } from 'react-router-dom';
+import UserInfo from '../../components/user-info';
 
 /**
  * Главная страница - первичная загрузка каталога
  */
-function Main() {
+function Profile() {
   const navigate = useNavigate()
   const store = useStore();
 
   useInit(() => {
     store.actions.catalog.initParams();
     store.actions.login.autoLogin();
+    if (!select.isAuth) {
+      navigate('/login')
+    }
   }, [], true);
 
   const select = useSelector(state => ({
@@ -31,7 +33,10 @@ function Main() {
 
   const callbacks = {
     navigateToLogin: () => navigate('/login'),
-    logOut: useCallback(() => store.actions.login.logOut(), [store])
+    logOut: useCallback(() => {
+      store.actions.login.logOut()
+      navigate('/')
+    }, [store])
   }
 
   const { t } = useTranslate();
@@ -43,10 +48,9 @@ function Main() {
         <LocaleSelect />
       </Head>
       <Navigation />
-      <CatalogFilter />
-      <CatalogList />
+      <UserInfo t={t} user={select.user} />
     </PageLayout>
   );
 }
 
-export default memo(Main);
+export default memo(Profile);

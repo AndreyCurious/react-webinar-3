@@ -1,0 +1,40 @@
+.Userbar {
+  height: 41px;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.Userbar-login {
+  display: inline-block;
+  font: 400 13.3333px Arial;
+  text-align: center;
+  padding: 1px 6px;
+  background-color:
+    #EFEFEF;
+  border-width: 1px;
+  text-decoration: none;
+  border-radius: 2px;
+  border-style: outset;
+  color: black;
+  border-color: #767676;
+  cursor: default;
+}
+
+.Userbar-login:hover {
+  opacity: 1.2;
+}
+
+.Userbar-link,
+.Userbar-link:visited {
+  color:
+    #0087E9;
+}
+
+.Userbar-link {
+  font-size: 13px;
+  line-height: 14.95px;
+  padding-right: 20px;
+}

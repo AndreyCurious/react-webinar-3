@@ -1,0 +1,30 @@
+.Login-form {
+  padding-left: 20px;
+}
+
+.Login-form-labels {
+  display: flex;
+  flex-direction: column
+}
+
+.Login-form-label {
+  display: flex;
+  flex-direction: column;
+  width: 203px;
+  font-size: 16px;
+  line-height: 18.4px;
+  padding-bottom: 23px;
+}
+
+.Login-form-label>input {
+  height: 26px;
+  box-sizing: border-box;
+}
+
+.Login-form-error {
+  color: #FF0000;
+  font-size: 16px;
+  line-height: 18.4px;
+  font-weight: 400;
+  padding-bottom: 20px;
+}
