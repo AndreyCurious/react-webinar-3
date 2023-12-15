@@ -13,19 +13,13 @@ class LoginState extends StoreModule {
     }
   }
 
-  handleChangeLogin(e) {
+  handleChange(value, name) {
     this.setState({
       ...this.getState(),
-      login: e.target.value
+      [name]: value
     })
   }
 
-  handleChangePassword(e) {
-    this.setState({
-      ...this.getState(),
-      password: e.target.value
-    })
-  }
 
   async logOut() {
     const token = localStorage.getItem('token')

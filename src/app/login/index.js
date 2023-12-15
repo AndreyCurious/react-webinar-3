@@ -7,7 +7,7 @@ import Head from "../../components/head";
 import Navigation from "../../containers/navigation";
 import useInit from "../../hooks/use-init";
 import LocaleSelect from "../../containers/locale-select";
-import LoginForm from "../../components/login-form";
+import LoginForm from '../../containers/login-form';
 import UserBar from '../../components/user-bar';
 import { useNavigate } from 'react-router-dom';
 
@@ -34,9 +34,6 @@ function Login() {
 
   const callbacks = {
     navigateToLogin: () => navigate('/login'),
-    onSubmit: useCallback((e) => store.actions.login.onSubmit(e), [store]),
-    handleChangePassword: useCallback((e) => store.actions.login.handleChangePassword(e), [store]),
-    handleChangeLogin: useCallback((e) => store.actions.login.handleChangeLogin(e), [store]),
     logOut: useCallback(() => store.actions.login.logOut(), [store])
   }
 
@@ -47,16 +44,7 @@ function Login() {
         <LocaleSelect />
       </Head>
       <Navigation />
-      <LoginForm
-        t={t}
-        login={select.login}
-        password={select.password}
-        error={select.error}
-        onSubmit={callbacks.onSubmit}
-        handleChangeLogin={callbacks.handleChangeLogin}
-        handleChangePassword={callbacks.handleChangePassword}
-        isLoad={select.isLoad}
-      />
+      <LoginForm />
     </PageLayout>
   );
 }
