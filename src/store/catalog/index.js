@@ -65,11 +65,8 @@ class CatalogState extends StoreModule {
     const params = { ...this.getState().params, page: hasChangeCategory ? 1 : this.getState().params.page, ...newParams };
 
     // Установка новых параметров и признака загрузки
-    const categories = await fetch('api/v1/categories?fields=_id,title,parent(_id)&limit=*')
-    const jsonCategories = await categories.json();
     this.setState({
       ...this.getState(),
-      categories: [{ title: "Все", _id: 'null' }, ...jsonCategories.result.items],
       params,
       waiting: true
     }, 'Установлены параметры каталога');

@@ -21,17 +21,17 @@ function Main() {
 
   useInit(() => {
     store.actions.catalog.initParams();
-    store.actions.login.autoLogin();
+    store.actions.sessionState.refreshErrors();
   }, [], true);
 
   const select = useSelector(state => ({
-    user: state.login.user,
-    isAuth: state.login.isAuth
+    user: state.sessionState.user,
+    isAuth: state.sessionState.isAuth
   }));
 
   const callbacks = {
     navigateToLogin: () => navigate('/login'),
-    logOut: useCallback(() => store.actions.login.logOut(), [store])
+    logOut: useCallback(() => store.actions.sessionState.logOut(), [store])
   }
 
   const { t } = useTranslate();

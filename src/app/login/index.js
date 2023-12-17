@@ -15,26 +15,18 @@ function Login() {
   const store = useStore();
   const navigate = useNavigate()
 
-
-  useInit(() => {
-    store.actions.catalog.initParams();
-    store.actions.login.autoLogin();
-  }, [], true);
-
   const { t } = useTranslate();
 
   const select = useSelector(state => ({
-    login: state.login.login,
-    password: state.login.password,
-    error: state.login.error,
-    user: state.login.user,
-    isAuth: state.login.isAuth,
-    isLoad: state.login.isLoad
+    error: state.sessionState.error,
+    user: state.sessionState.user,
+    isAuth: state.sessionState.isAuth,
+    isLoad: state.sessionState.isLoad
   }));
 
   const callbacks = {
     navigateToLogin: () => navigate('/login'),
-    logOut: useCallback(() => store.actions.login.logOut(), [store])
+    logOut: useCallback(() => store.actions.sessionState.logOut(), [store])
   }
 
   return (

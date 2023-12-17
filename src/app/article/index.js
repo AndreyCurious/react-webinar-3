@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import useStore from "../../hooks/use-store";
 import useSelector from "../../hooks/use-selector";
@@ -21,6 +21,9 @@ function Article() {
   // Параметры из пути /articles/:id
   const params = useParams();
 
+  useEffect(() => {
+    store.actions.sessionState.refreshErrors();
+  }, []);
   useInit(() => {
     store.actions.article.load(params.id);
   }, [params.id]);
@@ -28,8 +31,8 @@ function Article() {
   const select = useSelector(state => ({
     article: state.article.data,
     waiting: state.article.waiting,
-    user: state.login.user,
-    isAuth: state.login.isAuth
+    user: state.sessionState.user,
+    isAuth: state.sessionState.isAuth,
   }));
 
   const { t } = useTranslate();
@@ -38,7 +41,7 @@ function Article() {
     // Добавление в корзину
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
     navigateToLogin: () => navigate('/login'),
-    logOut: useCallback(() => store.actions.login.logOut(), [store])
+    logOut: useCallback(() => store.actions.sessionState.logOut(), [store])
   }
 
   return (

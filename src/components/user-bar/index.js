@@ -7,9 +7,9 @@ import { Link } from "react-router-dom";
 function UserBar({ t, navigate, user, logOut, isAuth }) {
   return (
     <div className="Userbar">
-      <Link to={'/profile'} className="Userbar-link">{user}</Link>
       {isAuth ?
         <>
+          <Link to={'/profile'} className="Userbar-link">{user}</Link>
           <button onClick={logOut}>
             {t('logout')}
           </button>

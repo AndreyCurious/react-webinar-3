@@ -1,25 +1,23 @@
 import StoreModule from "../module";
 
-class LoginState extends StoreModule {
+class sessionState extends StoreModule {
 
   initState() {
     return {
-      login: '',
-      password: '',
-      error: '',
+      error: [],
       user: {},
       isAuth: false,
-      isLoad: false
+      isLoad: false,
+      hasToken: localStorage.getItem('token') ? true : false
     }
   }
 
-  handleChange(value, name) {
+  refreshErrors() {
     this.setState({
       ...this.getState(),
-      [name]: value
+      error: []
     })
   }
-
 
   async logOut() {
     const token = localStorage.getItem('token')
@@ -32,7 +30,9 @@ class LoginState extends StoreModule {
     })
     this.setState({
       ...this.getState(),
-      isAuth: false
+      isAuth: false,
+      hasToken: false,
+      user: {}
     })
     localStorage.removeItem('token')
   }
@@ -40,6 +40,10 @@ class LoginState extends StoreModule {
   async autoLogin() {
     const token = localStorage.getItem('token');
     if (token) {
+      this.setState({
+        ...this.getState(),
+        isLoad: true,
+      })
       const response = await fetch('api/v1/users/self?fields=*', {
         method: "GET",
         headers: {
@@ -47,21 +51,26 @@ class LoginState extends StoreModule {
           "Content-Type": "application/json"
         }
       })
-      const json = await response.json()
+      const json = await response.json();
       this.setState({
         ...this.getState(),
+        isLoad: false,
         isAuth: true,
         user: json.result,
       })
     }
+    this.setState({
+      ...this.getState(),
+      isLoad: false,
+    })
 
   }
 
-  async onSubmit(e) {
+  async onSubmit(e, login, password) {
     e.preventDefault();
     this.setState({
       ...this.getState(),
-      error: '',
+      error: [],
       isLoad: true
     })
     const response = await fetch('api/v1/users/sign', {
@@ -70,18 +79,16 @@ class LoginState extends StoreModule {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        "login": this.getState().login,
-        "password": this.getState().password
+        "login": login,
+        "password": password
       })
     })
     const json = await response.json();
-
     if (response.status === 200) {
       localStorage.setItem('token', json.result.token)
       this.setState({
         ...this.getState(),
-        login: '',
-        password: '',
+        hasToken: true,
         user: json.result.user,
         isAuth: true,
         isLoad: false
@@ -89,7 +96,7 @@ class LoginState extends StoreModule {
     } else {
       this.setState({
         ...this.getState(),
-        error: json.error.message,
+        error: json.error.data.issues.map((item) => item.message),
         password: '',
         isLoad: false
       })
@@ -97,4 +104,4 @@ class LoginState extends StoreModule {
   }
 }
 
-export default LoginState;
+export default sessionState;

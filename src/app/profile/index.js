@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import useStore from "../../hooks/use-store";
 import useSelector from '../../hooks/use-selector';
 import useTranslate from "../../hooks/use-translate";
@@ -11,34 +11,27 @@ import UserBar from '../../components/user-bar';
 import { useNavigate } from 'react-router-dom';
 import UserInfo from '../../components/user-info';
 
-/**
- * Главная страница - первичная загрузка каталога
- */
+
 function Profile() {
   const navigate = useNavigate()
   const store = useStore();
 
   useInit(() => {
-    store.actions.catalog.initParams();
-    store.actions.login.autoLogin();
-    if (!select.isAuth) {
-      navigate('/login')
-    }
-  }, [], true);
+    store.actions.profile.fetchUser();
+  }, [], true)
 
   const select = useSelector(state => ({
-    user: state.login.user,
-    isAuth: state.login.isAuth
+    user: state.profile.user,
+    isAuth: state.sessionState.isAuth
   }));
 
   const callbacks = {
     navigateToLogin: () => navigate('/login'),
     logOut: useCallback(() => {
-      store.actions.login.logOut()
+      store.actions.sessionState.logOut()
       navigate('/')
     }, [store])
   }
-
   const { t } = useTranslate();
 
   return (

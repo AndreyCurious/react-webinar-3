@@ -14,7 +14,7 @@ function UserInfo({ user, t }) {
           {t('user.name')}
         </span>
         <span className={cn('info')}>
-          {user.profile.name}
+          {user.profile?.name}
         </span>
       </div>
       <div className={cn('field')}>
@@ -22,7 +22,7 @@ function UserInfo({ user, t }) {
           {t('user.phone')}
         </span>
         <span className={cn('info')}>
-          {user.profile.phone}
+          {user.profile?.phone}
         </span>
       </div>
       <div className={cn('field')}>
@@ -30,7 +30,7 @@ function UserInfo({ user, t }) {
           {t('user.email')}
         </span>
         <span className={cn('info')}>
-          {user.email}
+          {user?.email}
         </span>
       </div>
     </div>
@@ -41,7 +41,7 @@ UserInfo.propTypes = {
   t: PropTypes.func,
   user: PropTypes.shape({
     email: PropTypes.string,
-    prfile: PropTypes.shape({
+    profile: PropTypes.shape({
       phone: PropTypes.string,
       name: PropTypes.string
     })

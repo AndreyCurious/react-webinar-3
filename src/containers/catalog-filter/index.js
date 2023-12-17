@@ -6,6 +6,7 @@ import Select from "../../components/select";
 import Input from "../../components/input";
 import SideLayout from "../../components/side-layout";
 import { getCatigoriesChildrens } from "../../utils";
+import useInit from "../../hooks/use-init";
 /**
  * Контейнер со всеми фильтрами каталога
  */
@@ -13,10 +14,14 @@ function CatalogFilter() {
 
   const store = useStore();
 
+  useInit(() => {
+    store.actions.categories.fetchCategories();
+  }, [], true);
+
   const select = useSelector(state => ({
     sort: state.catalog.params.sort,
     query: state.catalog.params.query,
-    categories: state.catalog.categories,
+    categories: state.categories.categoriesList,
     categoryId: state.catalog.params.categoryId
   }));
 

@@ -35,8 +35,10 @@ export function numberFormat(value, locale = 'ru-RU', options = {}) {
 }
 
 
+
+
 export function getCatigoriesChildrens(categories) {
-  const result = [{ title: "Все", _id: 'null' }];
+  const result = [];
   const getChild = (parentId, res, count = 1) => {
     let newParentId = '';
     categories.forEach((item) => {
@@ -52,13 +54,18 @@ export function getCatigoriesChildrens(categories) {
     let parentId = category.parent?._id;
     if (category.parent === null) {
       result.push(category);
-    } else {
+    } else if (result.length !== 0) {
       getChild(parentId, result);
     }
 
   });
-  return result
+  return [{
+    "title": "Все",
+    "_id": "null"
+  }, ...result]
 }
+
+
 /*
 let count = 0
     const hasParent = (item) => {

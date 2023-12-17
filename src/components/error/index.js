@@ -9,7 +9,7 @@ function Error(props) {
     <>
       {props.error ?
         <div className="Error">
-          {props.error}
+          {props.error.map(item => item)}
         </div>
         :
         <></>
@@ -20,7 +20,7 @@ function Error(props) {
 }
 
 Error.propTypes = {
-  error: PropTypes.string
+  error: PropTypes.array
 }
 
 
