@@ -1,0 +1,55 @@
+.Comment-form {
+  display: flex;
+  flex-direction: column;
+  padding: 25px 40px;
+}
+
+.Comment-form-title {
+  font-size: 12px;
+  font-weight: 700;
+  padding-bottom: 10px;
+}
+
+.Comment-from-button-article {
+  width: 90px;
+  margin-top: 10px;
+}
+
+.Comment-cancel {
+  padding: 0;
+  border: none;
+  text-decoration: underline;
+  color: #666666;
+  background-color: transparent;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.Comment-form-link {
+  padding-left: 40px;
+  padding-top: 20px;
+}
+
+.Comment-form-link>a {
+  color: #0087E9;
+}
+
+
+.Comment-form-link>a:visited {
+  color: #0087E9;
+}
+
+.Comment-link {
+  padding-top: 30px;
+  padding-left: 0;
+}
+
+.Comment-form-button-comment {
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.Form-comment {
+  padding-left: 30px;
+  padding-top: 30px;
+}

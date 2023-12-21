@@ -6,3 +6,10 @@
 .Input_theme_big {
   width: 300px;
 }
+
+
+.Input_theme_Comment-form-input {
+  height: 76px;
+  resize: none;
+  font-family: Arial, Helvetica, sans-serif;
+}

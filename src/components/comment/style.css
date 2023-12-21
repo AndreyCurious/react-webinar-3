@@ -1,0 +1,34 @@
+.Comment-text {
+  padding-bottom: 10px;
+}
+
+.Comment-user {
+  padding-top: 30px;
+  padding-bottom: 10px;
+}
+
+.Comment-user-name {
+  padding-right: 10px;
+  font-weight: 700;
+}
+
+.Comment-send {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #0087E9;
+  font-size: 12px;
+  padding: 0;
+}
+
+.Comment-user-date {
+  color: #666666;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.Comment-currentuser-name {
+  color: #666666;
+  padding-right: 10px;
+  font-weight: 700;
+}

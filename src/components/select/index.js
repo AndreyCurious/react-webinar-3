@@ -1,9 +1,8 @@
-import {memo} from 'react';
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
 
 function Select(props) {
-
   const onSelect = (e) => {
     props.onChange(e.target.value);
   };

@@ -1,6 +1,6 @@
-import {memo, useCallback, useLayoutEffect, useState} from 'react';
+import { memo, useCallback, useLayoutEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import {cn as bem} from '@bem-react/classname';
+import { cn as bem } from '@bem-react/classname';
 import debounce from 'lodash.debounce';
 
 import './style.css';
@@ -25,9 +25,18 @@ function Input(props) {
   useLayoutEffect(() => setValue(props.value), [props.value]);
 
   const cn = bem('Input');
+
+  if (props.type === 'textarea') {
+    return <textarea
+      className={cn({ theme: props.theme })}
+      value={value}
+      placeholder={props.placeholder}
+      onChange={onChange}
+    />
+  }
   return (
     <input
-      className={cn({theme: props.theme})}
+      className={cn({ theme: props.theme })}
       value={value}
       type={props.type}
       placeholder={props.placeholder}
