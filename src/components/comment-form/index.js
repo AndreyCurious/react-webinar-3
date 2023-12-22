@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './style.css';
 
-function CommentForm({ formLocation, comment, sendComment, setComment, exists, changeFormLocation, t }) {
+function CommentForm({ formData, commentsData, exists, t }) {
+  const { changeFormLocation, formLocation, sendComment } = formData;
+  const { comment, setComment } = commentsData;
   const callbacks = {
     changeFormLocation: () => changeFormLocation('article', '')
   }
@@ -39,13 +41,29 @@ function CommentForm({ formLocation, comment, sendComment, setComment, exists, c
 }
 
 CommentForm.propTypes = {
-  sendComment: PropTypes.func,
-  setComment: PropTypes.func,
-  comment: PropTypes.string,
+  formData: PropTypes.shape({
+    sendComment: PropTypes.func,
+    changeFormLocation: PropTypes.func,
+    formLocation: PropTypes.string
+  }),
+  commentsData: PropTypes.shape({
+    setComment: PropTypes.func,
+    comment: PropTypes.string,
+  }),
   exists: PropTypes.bool,
-  changeFormLocation: PropTypes.func,
-  formLocation: PropTypes.string,
   t: PropTypes.func
 };
+
+CommentForm.defaultProps = {
+  commentsData: {
+    setComment: () => { },
+    comment: ''
+  },
+  formData: {
+    changeFormLocation: () => { },
+    sendComment: () => { },
+    formLocation: 'article',
+  }
+}
 
 export default memo(CommentForm);

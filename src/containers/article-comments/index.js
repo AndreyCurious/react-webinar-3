@@ -40,35 +40,39 @@ function ArticleComments() {
     changeFormLocation: (nameLocation, idComment) => dispatch(commentsActions.changeFormLocation(nameLocation, idComment))
   }
 
+  const formData = {
+    formLocation: selectRedux.formLocation,
+    changeFormLocation: callbacks.changeFormLocation,
+    sendComment: callbacks.sendComment,
+  }
+  const commentsData = {
+    currentComment: selectRedux.currentComment,
+    comments: options.comments[0].children,
+    comment: comment,
+    setComment: setComment
+  }
+
   return (
     <TreeComments countComments={selectRedux.comments.length} t={t}>
       <AllComments
         t={t}
+        formData={formData}
+        commentsData={commentsData}
         currentUser={select.userId}
-        currentComment={selectRedux.currentComment}
-        formLocation={selectRedux.formLocation}
-        changeFormLocation={callbacks.changeFormLocation}
-        comments={options.comments[0].children}
       >
         <CommentForm
           t={t}
-          changeFormLocation={callbacks.changeFormLocation}
-          formLocation={selectRedux.formLocation}
+          formData={formData}
+          commentsData={commentsData}
           exists={select.exists}
-          sendComment={callbacks.sendComment}
-          comment={comment}
-          setComment={setComment}
         />
       </AllComments>
       {selectRedux.formLocation === 'article' ?
         <CommentForm
           t={t}
-          changeFormLocation={callbacks.changeFormLocation}
-          formLocation={selectRedux.formLocation}
+          formData={formData}
+          commentsData={commentsData}
           exists={select.exists}
-          sendComment={callbacks.sendComment}
-          comment={comment}
-          setComment={setComment}
         />
         :
         <></>

@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import dateFormat from '../../utils/date-format';
 import './style.css';
 
-function Comment({ comment, changeFormLocation, formLocation, currentComment, children, currentUser, t }) {
+function Comment({ formData, commentsData, comment, children, currentUser, t }) {
+  const { changeFormLocation, formLocation } = formData;
+  const { currentComment } = commentsData;
+  console.log(commentsData.comments)
   const callbacks = {
     changeFormLocation: () => changeFormLocation('comment', comment._id)
   }
@@ -26,7 +29,7 @@ function Comment({ comment, changeFormLocation, formLocation, currentComment, ch
         </div>
         {currentUser ?
           <>
-            <AllComments t={t} currentUser={currentUser} currentComment={currentComment} formLocation={formLocation} comments={comment.children} changeFormLocation={changeFormLocation}>
+            <AllComments formData={formData} commentsData={{ ...commentsData, comments: comment.children }} t={t} currentUser={currentUser}>
               {children}
             </AllComments>
             {formLocation === 'comment' && currentComment === comment._id ?
@@ -42,27 +45,47 @@ function Comment({ comment, changeFormLocation, formLocation, currentComment, ch
               :
               <></>
             }
-            <AllComments t={t} currentUser={currentUser} currentComment={currentComment} formLocation={formLocation} comments={comment.children} changeFormLocation={changeFormLocation}>
+            <AllComments formData={formData} commentsData={{ ...commentsData, comments: comment.children }} t={t} currentUser={currentUser}>
               {children}
             </AllComments>
           </>
-
         }
-
-
       </li>
     </ul >
   )
 }
 
 Comment.propTypes = {
-  comments: PropTypes.array,
-  changeFormLocation: PropTypes.func,
-  formLocation: PropTypes.string,
-  currentComment: PropTypes.string,
+  formData: PropTypes.shape({
+    changeFormLocation: PropTypes.func,
+    formLocation: PropTypes.string,
+  }),
+  commentsData: PropTypes.shape({
+    currentComment: PropTypes.string,
+  }),
+  comment: PropTypes.shape({
+    author: PropTypes.shape({
+      _id: PropTypes.string,
+      profile: PropTypes.shape({
+        name: PropTypes.string
+      })
+    }),
+    text: PropTypes.string,
+  }),
   children: PropTypes.node,
   currentUser: PropTypes.string,
   t: PropTypes.func
 };
+
+Comment.defaultProps = {
+  formData: {
+    changeFormLocation: () => { },
+    formLocation: '',
+  },
+  commentsData: {
+    currentComment: ''
+  }
+
+}
 
 export default memo(Comment);
