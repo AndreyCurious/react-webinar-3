@@ -1,5 +1,7 @@
 .Comment-text {
   padding-bottom: 10px;
+  font-size: 14px;
+  overflow-wrap: break-word;
 }
 
 .Comment-user {
@@ -31,4 +33,13 @@
   color: #666666;
   padding-right: 10px;
   font-weight: 700;
+  font-size: 14px;
+}
+
+.Comment-nasting {
+  padding-left: 0;
+}
+
+.Comment-ul {
+  margin-top: 0;
 }

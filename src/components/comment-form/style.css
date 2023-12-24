@@ -30,15 +30,6 @@
   padding-top: 20px;
 }
 
-.Comment-form-link>a {
-  color: #0087E9;
-}
-
-
-.Comment-form-link>a:visited {
-  color: #0087E9;
-}
-
 .Comment-link {
   padding-top: 30px;
   padding-left: 0;
@@ -52,4 +43,14 @@
 .Form-comment {
   padding-left: 30px;
   padding-top: 30px;
+}
+
+.link {
+  padding: 0;
+  border: none;
+  text-decoration: underline;
+  color: #0087E9;
+  background-color: transparent;
+  font-size: 16px;
+  cursor: pointer;
 }

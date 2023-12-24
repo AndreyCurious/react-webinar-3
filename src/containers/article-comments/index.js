@@ -1,5 +1,5 @@
-import { memo, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { memo, useCallback, useMemo } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import commentsActions from '../../store-redux/comments/actions'
 import useTranslate from '../../hooks/use-translate';
 import useSelector from '../../hooks/use-selector';
@@ -15,13 +15,15 @@ import CommentForm from '../../components/comment-form';
 function ArticleComments() {
   const dispatch = useDispatch();
   const [comment, setComment] = useState('');
-
+  const countNesting = 0;
   const params = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const selectRedux = useSelectorRedux(state => ({
     comments: state.comments.comments,
     formLocation: state.comments.formLocation,
-    currentComment: state.comments.currentComment
+    currentComment: state.comments.currentComment,
   }), shallowequal);
   const select = useSelector((state) => ({
     exists: state.session.exists,
@@ -37,7 +39,11 @@ function ArticleComments() {
   const currentId = selectRedux.currentComment === '' ? params.id : selectRedux.currentComment
   const callbacks = {
     sendComment: () => dispatch(commentsActions.sendComments(comment, currentId, selectRedux.formLocation)),
-    changeFormLocation: (nameLocation, idComment) => dispatch(commentsActions.changeFormLocation(nameLocation, idComment))
+    changeFormLocation: (nameLocation, idComment) => dispatch(commentsActions.changeFormLocation(nameLocation, idComment)),
+    onSignIn: useCallback(() => {
+      navigate('/login', { state: { back: location.pathname } });
+    }, [location.pathname]),
+
   }
 
   const formData = {
@@ -49,7 +55,8 @@ function ArticleComments() {
     currentComment: selectRedux.currentComment,
     comments: options.comments[0].children,
     comment: comment,
-    setComment: setComment
+    setComment: setComment,
+    countNesting: countNesting,
   }
 
   return (
@@ -65,6 +72,7 @@ function ArticleComments() {
           formData={formData}
           commentsData={commentsData}
           exists={select.exists}
+          onSignIn={callbacks.onSignIn}
         />
       </AllComments>
       {selectRedux.formLocation === 'article' ?
@@ -73,6 +81,7 @@ function ArticleComments() {
           formData={formData}
           commentsData={commentsData}
           exists={select.exists}
+          onSignIn={callbacks.onSignIn}
         />
         :
         <></>

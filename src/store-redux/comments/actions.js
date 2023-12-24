@@ -29,5 +29,6 @@ export default {
 
   changeFormLocation: (nameLocation, id) => {
     return { type: "comments/change-from-location", payload: { formLocation: nameLocation, currentComment: id } }
-  }
+  },
+
 }

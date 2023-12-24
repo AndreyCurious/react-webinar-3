@@ -17,7 +17,7 @@ function AllComments({ formData, commentsData, children, currentUser, t }) {
 AllComments.propTypes = {
   formData: PropTypes.object,
   commentsData: PropTypes.shape({
-    commens: PropTypes.array
+    comments: PropTypes.array
   }),
   children: PropTypes.node,
   currentUser: PropTypes.string,
