@@ -22,7 +22,7 @@ function Comment({ formData, commentsData, comment, children, currentUser, t }) 
   }, [currentComment])
 
   return (
-    <ul className={countNesting > 19 ? 'Comment-nasting Comment-ul' : 'Comment-ul'}>
+    <ul className={countNesting > 16 ? 'Comment-nasting Comment-ul' : 'Comment-ul'}>
       <li>
         <div>
           <div className='Comment-user'>
